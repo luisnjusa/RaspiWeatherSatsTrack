@@ -1,0 +1,14 @@
+---
+- name: install raspberry-noaa-v2 core
+  hosts: core
+  connection: local
+  gather_facts: no
+  pre_tasks:
+    - name: get os release
+      shell: cat /etc/os-release | grep -E "^DEBIAN_CODENAME|^VERSION_CODENAME" | awk -F"=" '{print $NF}' | sort | head -1
+      register: raspbian_version
+      check_mode: no
+      changed_when: no
+  roles:
+    - role: common
+...
